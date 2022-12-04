@@ -2,7 +2,16 @@ import { ActionTypes } from "./../costants/action.types"
 import { API } from "../../backend"
 
 export const fetchProducts = () => async (dispatch) => {
-
+    try {
+        const response = await fetch(`${API}/products`)
+        const data = await response.json()
+        dispatch({
+            type: ActionTypes.FETCH_PRODUCTS,
+            payload: data
+        })
+    } catch (error) {
+        console.log(`err : ${error}`)
+    }
 }
 
 export const setProducts = (products) => {

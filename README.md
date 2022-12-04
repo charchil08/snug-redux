@@ -24,4 +24,4 @@
 
 - without middleware, action can return only Sync JS objects and nothing else.
 
-- to use async middleware, we need to use redux-thunk.
+- to use async middleware, we need to use redux-thunk. It basically return a function so we can make that returned function async and do API requests.
