@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 
-import { API } from "./../../backend"
-import { selectedProduct, removeSelectedProduct } from '../../redux/actions/productActions'
+import { fetchProduct, removeSelectedProduct } from '../../redux/actions/productActions'
 
 const ProductDetail = () => {
 
@@ -11,26 +10,15 @@ const ProductDetail = () => {
     const dispatch = useDispatch()
     const product = useSelector(state => state.product)
     const { image, title, price, category, description } = product;
-    const fetchProductDetail = async () => {
-        try {
-            const response = await fetch(`${API}/products/${productId}`)
-            const data = await response.json()
-            dispatch(selectedProduct(data))
-        } catch (error) {
-            console.log(`err : ${error}`)
-        }
-    }
 
     useEffect(() => {
         if (productId && productId !== '')
-            fetchProductDetail()
+            dispatch(fetchProduct(productId))
         // eslint-disable-next-line react-hooks/exhaustive-deps
         return () => {
             dispatch(removeSelectedProduct())
         }
     }, [productId, dispatch])
-
-    console.log(product)
 
     return (
         <div className="ui grid container">
